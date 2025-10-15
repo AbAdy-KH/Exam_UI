@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style/create_exam.css">
+        <title>Create Exam - Bartihan</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <a href="home.html" class="back-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    Back to Exams
+                </a>
+                <h1>Create New Exam</h1>
+                <div class="subtitle">Fill in the details to create a new exam</div>
+            </div>
+
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
+
+            <div class="form-card">
+                <form id="examForm">
+                    <div class="form-group">
+                        <label for="examTitle">
+                            Title
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="examTitle" 
+                            name="title" 
+                            placeholder="e.g., Introduction to Algorithms"
+                            required
+                        >
+                        <div class="helper-text">Enter the exam title</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subjectId">
+                            Subject
+                            <span class="required">*</span>
+                        </label>
+                        <select id="subjectId" name="subjectId" required>
+                            <option value="">Select a subject</option>
+                            <option value="programming">Programming</option>
+                            <option value="math">Math</option>
+                            <option value="physics">Physics</option>
+                            <option value="chemistry">Chemistry</option>
+                            <option value="biology">Biology</option>
+                            <option value="english">English</option>
+                            <option value="history">History</option>
+                        </select>
+                        <div class="helper-text">Choose the exam subject</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">
+                            Notes
+                        </label>
+                        <textarea 
+                            id="notes" 
+                            name="notes" 
+                            placeholder="Additional notes or instructions for this exam..."
+                        ></textarea>
+                        <div class="helper-text">Optional: Add any relevant notes</div>
+                    </div>
+
+                    <div class="questions-section">
+                        <div class="section-header">
+                            <label>Questions</label>
+                            <button type="button" class="btn-add-question" id="addQuestionBtn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                                Add Question
+                            </button>
+                        </div>
+                        <div class="helper-text" style="margin-bottom: 16px;">Add questions for this exam</div>
+                        
+                        <div id="questionsContainer" class="questions-container">
+                            <!-- Questions will be added here dynamically -->
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelBtn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 6L6 18M6 6l12 12"/>
+                            </svg>
+                            Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                                <polyline points="17 21 17 13 7 13 7 21"/>
+                                <polyline points="7 3 7 8 15 8"/>
+                            </svg>
+                            Create Exam
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script src="script/create_exam.js"></script>
+    </body>
+</html>

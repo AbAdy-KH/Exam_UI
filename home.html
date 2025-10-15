@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/home.css">
+    <title>Bartihan</title>
+</head>
+<body>
+    <div class="main">
+        <div class="header">
+            <h1>Bartihan</h1>
+            <div class="subtitle">Exam Management System</div>
+        </div>
+
+        <div class="toolbar">
+            <div class="search-container">
+                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-bar" id="searchInput" placeholder="Search by title, subject, or user...">
+            </div>
+            <div class="toolbar-buttons">
+                
+                <a href ="create_exam.html" class="btn btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Add Exam
+                </a>
+                <button class="btn btn-secondary" onclick="exportData()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Export
+                </button>
+            </div>
+        </div>
+
+        <div class="filter-container" style="margin-bottom: 24px;">
+            <select class="filter-select" id="subjectFilter">
+                <option value="all">All Subjects</option>
+                <option value="Programming">Programming</option>
+                <option value="Math">Math</option>
+            </select>
+        </div>
+
+        <div class="table-container">
+            <table class="exams-list" id="examsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Subject</th>
+                        <th>Title</th>
+                        <th>User</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="script/home.js" type="module"></script>
+
+</body>
+</html>
