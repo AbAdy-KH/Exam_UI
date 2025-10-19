@@ -157,15 +157,16 @@ function getQuestionsData() {
     return questionsData;
 }
 
-form.addEventListener('submit', function (e) {
+form.addEventListener('submit', async function (e) {
     e.preventDefault();
 
     errorMessage.classList.remove('show');
     successMessage.classList.remove('show');
 
-    const formData = {
+    let formData = {
         title: document.getElementById('examTitle').value.trim(),
-        subjectId: document.getElementById('subjectId').value,
+        // subjectId: document.getElementById('subjectId').value,
+        subjectId: "1",
         notes: document.getElementById('notes').value.trim(),
         questions: getQuestionsData(),
     };
@@ -189,7 +190,13 @@ form.addEventListener('submit', function (e) {
     }
 
     console.log('Exam object:', formData);
+    let response = await call_create_exam_api(formData);
 
+    if(!response.ok){
+        showError(`Error creating exam: ${response.status} ${response.statusText}`);
+        return;
+    }
+    
     successMessage.textContent = `Exam created successfully with ${formData.questions.length} question(s)!`;
     successMessage.classList.add('show');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -212,3 +219,33 @@ cancelBtn.addEventListener('click', function () {
         window.history.back();
     }
 });
+
+async function call_create_exam_api(exam) {
+    try {
+        const response = await fetch('https://localhost:7052/api/Exam/CreateExam', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(exam)
+        });
+
+        if (!response.ok) {
+            return { ok: false, status: response.status, statusText: response.statusText };
+        }
+
+        const contentType = response.headers.get('content-type');
+        let data;
+
+        if (contentType && contentType.includes('application/json')) {
+            data = await response.json();
+        } else {
+            data = await response.text();
+        }
+
+        return { ok: true, data };
+    } catch (error) {
+        console.error('Error:', error);
+        return { ok: false, error };
+    }
+}
