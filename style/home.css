@@ -8,9 +8,99 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background: #0f172a;
     min-height: 100vh;
-    padding: 30px 20px;
 }
 
+/* Top Navigation Bar Styles */
+body {
+    padding-top: 0;
+}
+
+.top-nav {
+    background: #1e293b;
+    border-bottom: 1px solid #334155;
+    padding: 16px 20px;
+    margin-bottom: 30px;
+}
+
+.top-nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-nav-brand {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.top-nav-brand svg {
+    color: #3b82f6;
+}
+
+.top-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid #334155;
+}
+
+.profile-button:hover {
+    background: #334155;
+    border-color: #3b82f6;
+}
+
+.profile-icon {
+    width: 32px;
+    height: 32px;
+    background: #3b82f6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .top-nav {
+        padding: 14px 16px;
+        margin-bottom: 20px;
+    }
+
+    .top-nav-brand {
+        font-size: 18px;
+    }
+
+    .profile-button span {
+        display: none;
+    }
+
+    .profile-button {
+        padding: 8px;
+    }
+}
 .main {
     max-width: 1200px;
     margin: 0 auto;

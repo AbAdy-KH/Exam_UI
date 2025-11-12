@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style/exam_details.css">
+  <title>Exam Details - Bartihan</title>
+
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <a href="home.html" class="back-link">← Back to Home</a>
+      <h1>Exam Details</h1>
+      <p class="subtitle">Review and manage your exam information</p>
+    </div>
+
+    <div class="details-card">
+      <div class="detail-group">
+        <label>Created by</label>
+        <div class="detail-value" id="username"></div>
+      </div>
+
+      <div class="detail-group">
+        <label>Exam ID</label>
+        <div class="detail-value" id="exam-id"></div>
+      </div>
+
+      <div class="detail-group">
+        <label>Title</label>
+        <div class="detail-value" id="exam-title"></div>
+      </div>
+
+      <div class="detail-group">
+        <label>Subject</label>
+        <div class="detail-value" id="exam-subject"></div>
+      </div>
+
+      <div class="detail-group">
+        <label>Notes</label>
+        <div class="notes-box" id="exam-notes"></div>
+      </div>
+
+      <div id="questions-container" style="display:none;"></div>
+      
+      <div class="form-actions">
+        <a href="home.html" class="btn btn-secondary">Back</a>
+        <button class="btn btn-secondary" id="cancel-edit-btn" style="display:none;">Cancel</button>
+        <button class="btn btn-primary" id="save-exam-btn" style="display:none;">💾 Save Changes</button>
+        <button class="btn btn-primary" id="edit-exam-btn">✏️ Edit</button>
+        <button class="btn btn-primary" id="start-exam-btn">🚀 Start Exam</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script/exam_details.js"></script>
+</body>
+</html>

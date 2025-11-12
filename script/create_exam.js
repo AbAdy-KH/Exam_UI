@@ -8,6 +8,7 @@ const questionsContainer = document.getElementById('questionsContainer');
 let questionCount = 0;
 let questions = [];
 
+renderSubjects();
 // Show empty state initially
 showEmptyState();
 
@@ -165,8 +166,7 @@ form.addEventListener('submit', async function (e) {
 
     let formData = {
         title: document.getElementById('examTitle').value.trim(),
-        // subjectId: document.getElementById('subjectId').value,
-        subjectId: "1",
+        subjectId: document.getElementById('subjectId').value,
         notes: document.getElementById('notes').value.trim(),
         questions: getQuestionsData(),
     };
@@ -249,3 +249,32 @@ async function call_create_exam_api(exam) {
         return { ok: false, error };
     }
 }
+
+async function call_get_subjects_api() 
+{
+    try {
+        let response = await fetch(`https://localhost:7052/api/Subject`, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+        });
+        if (!response.ok) return { ok: false, status: response.status, statusText: response.statusText };
+        return { ok: true, data: await response.json() };
+    } 
+    catch (error) {
+        console.error("Update exam error:", error);
+        return { ok: false, status: 0, statusText: error.message };
+    }
+}
+
+async function renderSubjects() {
+  let subjects = (await call_get_subjects_api()).data;
+  const subjectFilter = document.getElementById('subjectId');
+  
+  subjects.forEach(subject => {
+    const option = document.createElement('option');
+    option.value = subject.id;
+    option.textContent = subject.name;
+    subjectFilter.appendChild(option);
+  });
+}
+

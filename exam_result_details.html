@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Results</title>
+    <link rel="stylesheet" href="style/exam_result_details.css">
+</head>
+<body>
+    <div class="header">
+        <a href="exam_result_history.html" class="back-link">← Back to Home</a>
+    </div>
+    <div class="container">
+        <div id="content">
+            <div class="loading">Loading exam results...</div>
+        </div>
+    </div>
+
+    <script>
+
+        function renderResults(data) {
+            const content = document.getElementById('content');
+            
+            const correctCount = data.selectedAnswers.filter(
+                q => q.selectedAnswerText === q.correctAnswerText
+            ).length;
+            const totalQuestions = data.selectedAnswers.length;
+            
+            let html = `
+                <div class="score-card">
+                    <div class="score-label">Your Score</div>
+                    <div class="score-value">${data.mark}%</div>
+                    <div class="score-percentage">${correctCount} out of ${totalQuestions} correct</div>
+                </div>
+                
+                <div class="results-container">
+            `;
+            
+            data.selectedAnswers.forEach((question, index) => {
+                const isCorrect = question.selectedAnswerText === question.correctAnswerText;
+                const statusIcon = isCorrect ? '✓' : '✗';
+                
+                html += `
+                    <div class="question-card">
+                        <span class="question-number">Question ${index + 1}</span>
+                        <span class="status-icon">${statusIcon}</span>
+                        <div class="question-text">${question.questionText}</div>
+                        
+                        <div class="answer-box ${isCorrect ? 'correct-answer' : 'wrong-answer'}">
+                            <div class="answer-label">Your Answer</div>
+                            <div class="answer-text">${question.selectedAnswerText}</div>
+                        </div>
+                        
+                        ${!isCorrect ? `
+                            <div class="answer-box correct-answer">
+                                <div class="answer-label">Correct Answer</div>
+                                <div class="answer-text">${question.correctAnswerText}</div>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            content.innerHTML = html;
+        }
+
+        // Fetch data from your API
+        async function loadExamResults() {
+            try {
+                // Replace this URL with your actual API endpoint
+                const response = await fetch(`https://localhost:7052/api/ExamResult/${new URLSearchParams(window.location.search).get('examResultId')}`);
+                const data = await response.json();
+                
+                    renderResults(data);
+                
+            } catch (error) {
+                document.getElementById('content').innerHTML = `
+                    <div class="error">
+                        <h2>Error Loading Results</h2>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Load results when page loads
+        loadExamResults();
+    </script>
+</body>
+</html>

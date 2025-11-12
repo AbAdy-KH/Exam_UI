@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Results Dashboard</title>
+    <link rel="stylesheet" href="style/exam_result_history.css">
+</head>
+<body>
+    <div class="main">
+        <div class="header">
+            <a href="home.html" class="back-link">← Back to Home</a>
+            <h1>Exam Results</h1>
+            <p class="subtitle">View and manage student exam results</p>
+        </div>
+
+        <div class="toolbar">
+            <div class="search-container">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-bar" id="searchInput" placeholder="Search by exam title...">
+            </div>
+            <div class="toolbar-buttons">
+                <button class="btn btn-primary" onclick="refreshData()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+                    </svg>
+                    Refresh
+                </button>
+                <button class="btn btn-secondary" onclick="exportData()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                    </svg>
+                    Export
+                </button>
+            </div>
+        </div>
+
+        <div class="filter-container" style="margin-bottom: 20px;">
+            <select class="filter-select" id="subjectFilter">
+                <option value="all">All Subjects</option>
+            </select>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Exam Title</th>
+                        <th>Subject</th>
+                        <th>Mark</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsTableBody">
+                    <tr>
+                        <td colspan="4" class="loading">Loading exam results...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Configuration - Update this with your API endpoint
+        const API_ENDPOINT = 'https://localhost:7052/api/ExamResult/all';
+
+        let allResults = [];
+        let filteredResults = [];
+
+        // Fetch data from API
+        async function fetchExamResults() {
+            try {
+                const response = await fetch(API_ENDPOINT);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch exam results');
+                }
+                allResults = await response.json();
+                // console.log(allResults);
+                filteredResults = [...allResults];
+                populateSubjectFilter();
+                renderTable();
+            } catch (error) {
+                console.error('Error fetching exam results:', error);
+                // Use sample data for demonstration
+                // loadSampleData();
+            }
+        }
+
+        // Populate subject filter dropdown
+        function populateSubjectFilter() {
+            const subjects = [...new Set(allResults.map(r => r.subjectName))];
+            const subjectFilter = document.getElementById('subjectFilter');
+            
+            // Clear existing options except "All Subjects"
+            subjectFilter.innerHTML = '<option value="all">All Subjects</option>';
+            
+            subjects.forEach(subject => {
+                const option = document.createElement('option');
+                option.value = subject;
+                option.textContent = subject;
+                subjectFilter.appendChild(option);
+            });
+        }
+
+        // Get subject CSS class
+        function getSubjectClass(subjectName) {
+            const subject = subjectName.toLowerCase();
+            if (subject.includes('program')) return 'subject-programming';
+            if (subject.includes('math')) return 'subject-math';
+            if (subject.includes('science')) return 'subject-science';
+            if (subject.includes('english')) return 'subject-english';
+            return 'subject-default';
+        }
+
+        // Get mark CSS class based on score
+        function getMarkClass(mark) {
+            if (mark >= 90) return 'mark-excellent';
+            if (mark >= 75) return 'mark-good';
+            if (mark >= 60) return 'mark-average';
+            return 'mark-poor';
+        }
+
+        // Render table with filtered results
+        function renderTable() {
+            const tbody = document.getElementById('resultsTableBody');
+            
+            if (filteredResults.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="no-results">No exam results found</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = filteredResults.map((result, index) => `
+                <tr class="exam-result-row" data-examResultId = "${result.examResultId}">
+                    <td data-label="#">${index + 1}</td>
+                    <td data-label="Exam Title">${result.examTitle}</td>
+                    <td data-label="Subject">
+                        <span class="subject-tag ${getSubjectClass(result.subjectName)}">
+                            ${result.subjectName}
+                        </span>
+                    </td>
+                    <td data-label="Mark">
+                        <span class="mark-badge ${getMarkClass(result.mark)}">
+                            ${result.mark}%
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+
+            document.querySelectorAll('.exam-result-row').forEach((row) => {
+                row.addEventListener("click", function () {
+                    const id = this.getAttribute("data-examResultId");
+                    window.location.href = "exam_result_details.html?examResultId=" + id;
+                });
+            });
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const subjectFilter = document.getElementById('subjectFilter').value;
+            
+            filteredResults = allResults.filter(result => {
+                const matchesSearch = result.examTitle.toLowerCase().includes(searchTerm);
+                const matchesSubject = subjectFilter === 'all' || result.subjectName === subjectFilter;
+                return matchesSearch && matchesSubject;
+            });
+            
+            renderTable();
+        });
+
+        // Subject filter functionality
+        document.getElementById('subjectFilter').addEventListener('change', (e) => {
+            const subjectFilter = e.target.value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            filteredResults = allResults.filter(result => {
+                const matchesSearch = result.examTitle.toLowerCase().includes(searchTerm);
+                const matchesSubject = subjectFilter === 'all' || result.subjectName === subjectFilter;
+                return matchesSearch && matchesSubject;
+            });
+            
+            renderTable();
+        });
+
+        // Refresh data
+        function refreshData() {
+            document.getElementById('resultsTableBody').innerHTML = 
+                '<tr><td colspan="4" class="loading">Loading exam results...</td></tr>';
+            fetchExamResults();
+        }
+
+        // Export data to CSV
+        function exportData() {
+            const csv = [
+                ['#', 'Exam Title', 'Subject', 'Mark'],
+                ...filteredResults.map((result, index) => [
+                    index + 1,
+                    result.examTitle,
+                    result.subjectName,
+                    result.mark
+                ])
+            ].map(row => row.join(',')).join('\n');
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'exam-results.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        // Initialize on page load
+        fetchExamResults();
+
+    </script>
+</body>
+</html>

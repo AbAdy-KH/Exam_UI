@@ -7,6 +7,22 @@
     <title>Bartihan</title>
 </head>
 <body>
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav">
+        <div class="top-nav-container">
+            <a href="home.html" class="top-nav-brand">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+                Bartihan
+            </a>
+            <div class="top-nav-right" id="topNavRight">
+
+            </div>
+        </div>
+    </nav>
+
     <div class="main">
         <div class="header">
             <h1>Bartihan</h1>
@@ -23,6 +39,9 @@
             </div>
             <div class="toolbar-buttons">
                 
+                <button class="btn btn-secondary" id="searchBtn">
+                    search
+                </button>
                 <a href ="create_exam.html" class="btn btn-primary">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="12" y1="5" x2="12" y2="19"></line>
@@ -30,22 +49,12 @@
                     </svg>
                     Add Exam
                 </a>
-                <button class="btn btn-secondary" onclick="exportData()">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                        <polyline points="7 10 12 15 17 10"></polyline>
-                        <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    Export
-                </button>
             </div>
         </div>
 
         <div class="filter-container" style="margin-bottom: 24px;">
             <select class="filter-select" id="subjectFilter">
-                <option value="all">All Subjects</option>
-                <option value="Programming">Programming</option>
-                <option value="Math">Math</option>
+                <option value="-1" selected>All Subjects</option>
             </select>
         </div>
 
@@ -53,7 +62,6 @@
             <table class="exams-list" id="examsTable">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Subject</th>
                         <th>Title</th>
                         <th>User</th>
