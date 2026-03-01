@@ -1,0 +1,65 @@
+.start-exam-page {
+    max-width: 900px;
+    margin: 0px auto;
+    padding: 24px;
+}
+
+
+.start-exam-page .exam-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.start-exam-page .card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.start-exam-page .card-header {
+    background: #0f172a;
+    padding: 18px 24px;
+    border-bottom: 1px solid #334155;
+}
+
+.start-exam-page .card-header h3,
+.start-exam-page .card-header h5 {
+    margin: 0;
+    color: #fff;
+    font-weight: 600;
+}
+
+.start-exam-page .card-body {
+    padding: 0px 24px 20px 24px;
+}
+
+/* .badge {
+    background: #3b82f6;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+} */
+
+.start-exam-page .form-actions{
+    display: flex;
+    gap: 12px;
+    margin-top: 36px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.start-exam-page .form-check {
+    margin-bottom: 10px;
+}
+
+.start-exam-page .form-check-input {
+    accent-color: #3b82f6;
+    transform: scale(1.2);
+    margin-right: 8px;
+}
+
+/*====================*/
+

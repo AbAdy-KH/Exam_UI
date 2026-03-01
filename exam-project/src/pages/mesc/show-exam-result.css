@@ -1,0 +1,50 @@
+.show-exam-result-page {
+    max-width: 900px;
+    margin: 0px auto;
+    padding: 24px;
+}
+
+.alert {
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+.alert-info {
+    background: #1e3a8a;
+    color: #c7d2fe;
+}
+.alert-success {
+    background: #14532d;
+    color: #bbf7d0;
+}
+.alert-warning {
+    background: #78350f;
+    color: #fed7aa;
+}
+
+.result-card {
+    text-align: center;
+    padding: 60px 20px;
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 12px;
+}
+
+.show-exam-result-page .info {
+    margin: 40px;
+}
+
+.show-exam-result-page .mark {
+    background: #3aa562;
+    padding: 15px;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.show-exam-result-page .result-message {
+    background: #bc2ad2;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 13px;
+}

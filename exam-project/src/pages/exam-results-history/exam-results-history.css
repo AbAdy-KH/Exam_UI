@@ -1,0 +1,70 @@
+/* ===== Layout ===== */
+
+.exam-results-page {
+    max-width: 900px;
+    margin: 0px auto;
+    padding: 24px;
+}
+
+/* ===== Toolbar ===== */
+.exam-results-page .toolbar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.exam-results-page .toolbar-input {
+    font-family: inherit;
+    color: white;
+    background: #1e293b;
+    padding: 11px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    width: 40vw;
+}
+
+/* ===== Table ===== */
+.exam-results-page .exam-results-table{
+    background: #1e293b;
+    border-radius: 12px;
+    border-width: 3px;
+    border-style: solid;
+    overflow: hidden;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.exam-results-page .exam-results-table-header {
+    color: #909fbd;
+    background: #0f172a;
+    text-align: left;
+    font-size: 13px;
+}
+
+.exam-results-page .exam-results-table-row:hover {
+    background: #273447;
+}
+
+.exam-results-page
+th,
+td {
+    padding: 18px;
+    border-bottom: 1px solid #334155;
+}
+
+
+.mark-tag{
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+}
+.mark-tag.pass {
+    background-color: green;
+    color: white;
+}
+.mark-tag.fail {
+    background-color: orangeRed;
+    color: white;
+}
