@@ -11,5 +11,6 @@ export default defineConfig({
         // target: 'http://192.168.1.20:7052'
       }
     }
-  }
+  },
+  base: "/Exam_UI_React/"
 })
