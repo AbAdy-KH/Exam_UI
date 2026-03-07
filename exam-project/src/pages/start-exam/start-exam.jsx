@@ -26,7 +26,7 @@ async function getFullExam(examId)
         return { ok : true, data : res.data}
     } catch (e) 
     { 
-        console.log(e.message); 
+        (e.message); 
         return { ok : false, message : e.message }
     }
 }
@@ -50,13 +50,91 @@ async function createExamResult(examData) {
 
     } catch (e) {
 
-        console.log(e.message); 
+        (e.message); 
         return { ok : false, message : e.message }
     }
+}
 
 
-    // if (res.ok) displayResults(solved, exam.questions.length, mark);
-    // else showError('Error submitting result');
+
+//=============Components============
+
+function ExamInfoCard({ examData }) {
+
+    return (
+        <div className="card">
+            <div className="card-header">
+                <h3> {examData?.title} </h3>
+            </div>
+
+            <div className="card-body">
+                <p> Subject: {examData?.subject?.name} </p>
+                <p> Questions: {examData?.questions?.length} </p>
+                <div> notes: {examData?.notes}</div>
+            </div>
+        </div>
+    )
+}
+
+function OptionItem({ q, o, handleSelectOption }) {
+
+    return (
+        <div key={o.id} className="form-check">
+            <input className="form-check-input" type="radio" 
+                    name={q.id} value={o.id}
+                    onClick={() => handleSelectOption(q.questionNumber, o.id)} />
+            <label>{o.text}</label>
+        </div>
+    )
+}
+
+function QuestionCard({ q, handleSelectOption }) {
+    return (
+        <div key={q.id} className="card shadow question-card"> 
+            <div className="card-header"><h5>Question {q.questionNumber}</h5></div>
+            
+            <div className="card-body">
+                <p className="lead">{q.text}</p>
+
+                {q.options.map(o => (
+                    <OptionItem
+                        q={q} 
+                        o={o} 
+                        handleSelectOption={handleSelectOption}
+                    />
+                ))}
+            </div>
+        </div>
+    )
+}
+
+function QuestionsContainer({ questions, handleSelectOption }) {
+
+    return (
+        <div className="questions-container">
+            {questions.map(q => (
+                <QuestionCard 
+                    q={q} 
+                    handleSelectOption={handleSelectOption}
+                />
+            ))}
+        </div>
+    )
+}
+
+function FormActions({ handleSubmitExam }) {
+
+    return (
+        <div className="form-actions">
+            <button className="btn btn-primary" onClick={handleSubmitExam}>
+                Submit Exam
+            </button>
+            
+            <button className="btn btn-secondary" onClick={() => {window.history.back()}}>
+                Cancel
+            </button>
+        </div>
+    )
 }
 
 export function StartExamPage()
@@ -111,49 +189,23 @@ export function StartExamPage()
         });
     }
 
+
+    if(!examData) return <div> Loading... </div>
+
+
     return (
         <div className="start-exam-page">
             <div className="exam-container">
-                <div className="card">
-                    <div className="card-header">
-                        <h3> {examData?.title} </h3>
-                    </div>
 
-                    <div className="card-body">
-                        <p> Subject: {examData?.subject?.name} </p>
-                        <p> Questions: {examData?.questions?.length} </p>
-                        <div> notes: {examData?.notes}</div>
-                    </div>
-                </div>
+                <ExamInfoCard examData={examData} />
 
-                <div className="questions-container">
-                    {examData?.questions.map(q => (
-                        <div key={q.id} className="card shadow question-card"> 
-                            <div className="card-header"><h5>Question {q.questionNumber}</h5></div>
-                            <div className="card-body">
-                                <p className="lead">{q.text}</p>
-                                {q.options.map(o => (
-                                    <div key={o.id} className="form-check">
-                                        <input className="form-check-input" type="radio" 
-                                                name={q.id} value={o.id}
-                                                onClick={() => handleSelectOption(q.questionNumber, o.id)} />
-                                        <label>{o.text}</label>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                <QuestionsContainer 
+                    questions={examData.questions}
+                    handleSelectOption={handleSelectOption} 
+                />
 
-                <div className="form-actions">
-                    <button className="btn btn-primary" onClick={handleSubmitExam}>
-                        Submit Exam
-                    </button>
-                    
-                    <button className="btn btn-secondary" onClick={() => {window.history.back()}}>
-                        Cancel
-                    </button>
-                </div>
+                <FormActions handleSubmitExam={handleSubmitExam} />
+
             </div>
         </div>
     );

@@ -4,36 +4,6 @@
     padding: 24px;
 }
 
-.create-exam-page .container {
-    padding: 30px 20px;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.create-exam-page .header {
-    margin-bottom: 40px;
-}
-
-.create-exam-page .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: #94a3b8;
-    text-decoration: none;
-    font-size: 14px;
-    margin-bottom: 16px;
-    transition: color 0.create-exam-page .2s;
-}
-
-.create-exam-page .back-link:hover {
-    color: #cbd5e1;
-}
-
-.create-exam-page .subtitle {
-    color: #94a3b8;
-    font-size: 16px;
-}
-
 .create-exam-page .form-card {
     background: #1e293b;
     border-radius: 16px;
@@ -228,46 +198,4 @@
     height: 18px;
     cursor: pointer;
     accent-color: #3b82f6;
-}
-
-
-@media (max-width: 768px) {
-
-    .create-exam-page .subtitle {
-        font-size: 14px;
-    }
-
-    .create-exam-page .form-card {
-        padding: 24px;
-    }
-
-    .create-exam-page .form-actions {
-        flex-direction: column-reverse;
-    }
-
-    .create-exam-page .btn {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .create-exam-page .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
-
-    .create-exam-page .btn-add-question {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .create-exam-page .choice-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-
-    .create-exam-page .choice-label {
-        min-width: auto;
-    }
 }

@@ -136,10 +136,3 @@
 .register-login-link:hover {
     text-decoration: underline;
 }
-
-/* Mobile */
-@media (max-width: 480px) {
-    .register-card {
-        max-width: 200px;
-    }
-}

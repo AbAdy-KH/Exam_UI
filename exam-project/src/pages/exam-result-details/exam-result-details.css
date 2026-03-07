@@ -4,7 +4,7 @@
     padding: 24px;
 }
 
-.score-card {
+.exam-resutl-details-page .score-card {
     background: #1e293b;
     border: 1px solid #334155;
     border-radius: 12px;
@@ -13,7 +13,7 @@
     margin-bottom: 30px;
 }
 
-.score-label {
+.exam-resutl-details-page .score-label {
     font-size: 14px;
     color: #94a3b8;
     margin-bottom: 12px;
@@ -22,41 +22,41 @@
     font-weight: 600;
 }
 
-.score-value {
+.exam-resutl-details-page .score-value {
     font-size: 72px;
     font-weight: 700;
     color: #3b82f6;
     line-height: 1;
 }
 
-.score-percentage {
+.exam-resutl-details-page .score-percentage {
     font-size: 18px;
     color: #64748b;
     margin-top: 12px;
 }
 
-.questions-container {
+.exam-resutl-details-page .questions-container {
     background: #1e293b;
     border: 1px solid #334155;
     border-radius: 12px;
     padding: 30px;
 }
 
-.question-card {
+.exam-resutl-details-page .question-card {
     border-bottom: 1px solid #334155;
     padding: 30px 0;
 }
 
-.question-card:first-child {
+.exam-resutl-details-page .question-card:first-child {
     padding-top: 0;
 }
 
-.question-card:last-child {
+.exam-resutl-details-page .question-card:last-child {
     border-bottom: none;
     padding-bottom: 0;
 }
 
-.question-number {
+.exam-resutl-details-page .question-number {
     display: inline-block;
     background: #3b82f6;
     color: white;
@@ -69,20 +69,20 @@
     letter-spacing: 0.5px;
 }
 
-.status-icon {
+.exam-resutl-details-page .status-icon {
     font-size: 28px;
     line-height: 1;
 }
 
-.status-correct {
+.exam-resutl-details-page .status-correct {
     color: #10b981;
 }
 
-.status-wrong {
+.exam-resutl-details-page .status-wrong {
     color: #ef4444;
 }
 
-.question-text {
+.exam-resutl-details-page .question-text {
     font-size: 18px;
     font-weight: 600;
     color: #e2e8f0;
@@ -90,29 +90,29 @@
     line-height: 1.6;
 }
 
-.answer-box {
+.exam-resutl-details-page .answer-box {
     margin: 12px 0;
     padding: 16px 18px;
     border-radius: 8px;
     border-left: 4px solid;
 }
 
-.selected-answer {
+.exam-resutl-details-page .selected-answer {
     background: rgba(251, 191, 36, 0.1);
     border-left-color: #fbbf24;
 }
 
-.correct-answer {
+.exam-resutl-details-page .correct-answer {
     background: rgba(16, 185, 129, 0.1);
     border-left-color: #10b981;
 }
 
-.wrong-answer {
+.exam-resutl-details-page .wrong-answer {
     background: rgba(239, 68, 68, 0.1);
     border-left-color: #ef4444;
 }
 
-.answer-label {
+.exam-resutl-details-page .answer-label {
     font-size: 12px;
     font-weight: 600;
     text-transform: uppercase;
@@ -120,32 +120,32 @@
     margin-bottom: 8px;
 }
 
-.selected-answer .answer-label {
+.exam-resutl-details-page .selected-answer .answer-label {
     color: #fbbf24;
 }
 
-.correct-answer .answer-label {
+.exam-resutl-details-page .correct-answer .answer-label {
     color: #10b981;
 }
 
-.wrong-answer .answer-label {
+.exam-resutl-details-page .wrong-answer .answer-label {
     color: #ef4444;
 }
 
-.answer-text {
+.exam-resutl-details-page .answer-text {
     font-size: 15px;
     color: #e2e8f0;
     line-height: 1.6;
 }
 
-.loading {
+.exam-resutl-details-page .loading {
     text-align: center;
     padding: 60px 20px;
     color: #94a3b8;
     font-size: 16px;
 }
 
-.error {
+.exam-resutl-details-page .error {
     background: rgba(239, 68, 68, 0.1);
     color: #ef4444;
     padding: 30px;
@@ -154,41 +154,7 @@
     border: 1px solid #ef4444;
 }
 
-.error h2 {
+.exam-resutl-details-page .error h2 {
     font-size: 20px;
     margin-bottom: 10px;
-}
-
-@media (max-width: 768px) {
-    .score-card {
-        padding: 30px 20px;
-    }
-
-    .score-value {
-        font-size: 56px;
-    }
-
-    .score-percentage {
-        font-size: 16px;
-    }
-
-    .questions-container {
-        padding: 20px;
-    }
-
-    .question-card {
-        padding: 24px 0;
-    }
-
-    .question-text {
-        font-size: 16px;
-    }
-
-    .answer-box {
-        padding: 14px 16px;
-    }
-
-    .answer-text {
-        font-size: 14px;
-    }
 }

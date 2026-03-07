@@ -46,25 +46,26 @@
     background: #273447;
 }
 
-.exam-results-page
-th,
-td {
+.exam-results-page th,
+.exam-results-page td {
     padding: 18px;
     border-bottom: 1px solid #334155;
 }
 
 
-.mark-tag{
+.exam-results-page .mark-tag{
     padding: 5px 10px;
     border-radius: 6px;
     font-size: 13px;
     font-weight: 500;
 }
-.mark-tag.pass {
+
+.exam-results-page .mark-tag.pass {
     background-color: green;
     color: white;
 }
-.mark-tag.fail {
+
+.exam-results-page .mark-tag.fail {
     background-color: orangeRed;
     color: white;
 }

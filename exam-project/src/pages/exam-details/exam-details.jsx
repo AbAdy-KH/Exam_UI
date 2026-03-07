@@ -1,6 +1,7 @@
 import { HeaderComponent } from "../../components/header"
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { get_current_user_id } from "../../utils/user";
 import "./exam-details.css"
 
 //===============API==================
@@ -55,6 +56,43 @@ async function saveOrUnsaveExam({ examId, isSaved }) {
     }
 }
 
+
+//===============Components===========
+function FormActions ({ examDetails }) {
+    
+    const currentUserId = get_current_user_id();
+
+    const flag = (currentUserId === examDetails.userId);
+
+    return (
+        <div className="form-actions">
+            <button 
+                onClick={() => window.history.back()} 
+                className="btn btn-secondary">
+                    Back
+            </button>
+
+            {   flag &&
+                <button 
+                    onClick={() => 
+                        window.location.href = `edit-exam?id=${examDetails?.id}`
+                    } 
+                    className="btn btn-primary"
+                >
+                        Edit
+                </button>
+            }
+
+            <button 
+                className="btn btn-primary"
+                onClick={() => 
+                    window.location.href = `start-exam?id=${examDetails?.id}`
+                }   
+            > Start Exam</button>
+        </div>
+    )
+}
+
 export function ExamDetailsPage() {
 
     const [examDetails, setExamDetails] = useState(null);
@@ -71,7 +109,6 @@ export function ExamDetailsPage() {
     const handleSaveClick = async () => {
         if (!examDetails) return;
 
-        // optimistic toggle
         setExamDetails(prev => ({ ...prev, isSaved: !prev.isSaved }));
 
         try {
@@ -80,12 +117,11 @@ export function ExamDetailsPage() {
                 isSaved: examDetails.isSaved
             });
         } catch {
-            // revert if failed
             setExamDetails(prev => ({ ...prev, isSaved: !prev.isSaved }));
         }
     };
 
-    console.log("Exam details state:", examDetails);
+    if(!examDetails) return ( <dev> Loading...</dev> );
 
     return (
         <>
@@ -94,8 +130,9 @@ export function ExamDetailsPage() {
             <div className="exam-details-page">
                 <div className="exam-details-card">
                     <button
-                    onClick={() => handleSaveClick()}
-                    className={`save-exam-btn ${examDetails?.isSaved ? "saved" : "unsaved"}`}>
+                        onClick={() => handleSaveClick()}
+                        className={`save-exam-btn ${examDetails?.isSaved ? "saved" : "unsaved"}`}
+                    >
                         {examDetails?.isSaved ? "Unsave exam" : "Save exam"}
                     </button>
 
@@ -134,26 +171,7 @@ export function ExamDetailsPage() {
                         </div>
                     </div>
 
-                    <div className="form-actions">
-                        <button 
-                            onClick={() => window.history.back()} 
-                            className="btn btn-secondary">
-                                🔙 Back
-                        </button>
-                        <button 
-                            onClick={() => 
-                                window.location.href = `edit-exam?id=${examDetails?.id}`
-                            } 
-                            className="btn btn-primary">
-                                ✏️ Edit
-                        </button>
-                        <button 
-                            className="btn btn-primary"
-                            onClick={() => 
-                                window.location.href = `start-exam?id=${examDetails?.id}`
-                            }   
-                        >🚀 Start Exam</button>
-                    </div>
+                    <FormActions examDetails={examDetails} />
                 </div>
             </div>
         </>

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { HeaderComponent } from "../../components/header";
+import { get_current_user_id } from "../../utils/user";
 import "./profile.css";
 
 /* ================= API ================= */
@@ -94,8 +95,8 @@ function StatsGrid({user}) {
 
 function ActionCard({ title, description, icon, link, className }) {
     return (
-        <Link to={link} className={`actions-card ${className}`}>
-            <div className="actions-icon">
+        <Link to={link} className={`actions-card`}>
+            <div className={`actions-icon ${className}`}>
                 {icon}
             </div>
             <div className="actions-content">
@@ -111,6 +112,11 @@ function ActionCard({ title, description, icon, link, className }) {
     )
 }
 function ActionsGrid({ user }) {
+
+    const currentUserId = get_current_user_id();
+
+    const flag = (currentUserId === user.id);
+
     return (
         <div className="actions">
 
@@ -122,21 +128,25 @@ function ActionsGrid({ user }) {
                 className={"created"}
             />
 
-            <ActionCard 
-                title="Saved Exams"
-                description="View and manage all exams you have saved"
-                icon="✅"
-                link={`/home?source=saved&userId=${encodeURIComponent(user.id)}`}
-                className={"saved"}
-            />
-
-            <ActionCard 
-                title="Exam Results History"
-                description="View your past exam results history"
-                icon="📊"
-                link={`/exam-results-history?userId=${encodeURIComponent(user.id)}`}
-                className={"results"}
-            />
+            {   flag && 
+                <ActionCard 
+                    title="Saved Exams"
+                    description="View and manage all exams you have saved"
+                    icon="✅"
+                    link={`/home?source=saved&userId=${encodeURIComponent(user.id)}`}
+                    className={"saved"}
+                />
+            }       
+            
+            {   flag &&
+                <ActionCard 
+                    title="Exam Results History"
+                    description="View your past exam results history"
+                    icon="📊"
+                    link={`/exam-results-history?userId=${encodeURIComponent(user.id)}`}
+                    className={"results"}
+                />
+            }
         </div>
     )
 }

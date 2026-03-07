@@ -21,7 +21,6 @@ async function login(username, password) {
     }
 }
 
-
 function LoginHeader() {
     return (
             <header className="login-header">

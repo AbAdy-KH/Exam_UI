@@ -16,13 +16,13 @@ async function getExamResult(examResultId) {
             }
         });
 
-        console.log(res.data);
+        (res.data);
         
         return { ok: true, data: res.data }
 
     } catch (e) {
 
-        console.log(e.message); 
+        (e.message); 
         return { ok : false, message : e.message }
     }
 }

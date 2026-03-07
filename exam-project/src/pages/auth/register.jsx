@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router";
+import { Navigate } from "react-router";
 import "./register.css";
 
 // ================= API ================= //
@@ -15,12 +16,17 @@ async function register(registrationData, setError) {
         { 
             headers: { "Content-Type": "application/json" }
         });
+
+        return {ok: true}
+
     } catch (error) {
         setError(
             error.response?.data?.errors ||
             error.response?.data?.message ||
             "Registration failed. Please try again."
         );
+
+        return {ok: false, message: error.message};
     }
 }
 
@@ -56,7 +62,7 @@ function Field({ label, ...props }) {
 function RegisterForm({ formData, handleChange, handleRegister })
 {
     return (
-                    <div className="register-form">
+                <div className="register-form">
                 <Field
                     label="Full Name"
                     name="fullname"
@@ -121,8 +127,9 @@ export function RegisterPage() {
         password: "",
         confirmPassword: "",
     });
-
     const [error, setError] = useState("");
+
+    const navigate = Navigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -144,7 +151,10 @@ export function RegisterPage() {
             return;
         }
 
-        await register({ fullname, username, email, password }, setError);
+        let res = await register({ fullname, username, email, password }, setError);
+
+        if(res) navigate(`./login`);
+        else setError(res.message);
     };
 
     return (

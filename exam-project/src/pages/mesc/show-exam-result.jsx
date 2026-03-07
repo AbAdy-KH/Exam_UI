@@ -16,7 +16,8 @@ export function ShowExamResultPage()
     return (
         <div className="show-exam-result-page">
             
-            { !error && <div className="result-card">
+            { !error && 
+            <div className="result-card">
 
                 <h2>Exam Completed!</h2>
 
@@ -36,18 +37,16 @@ export function ShowExamResultPage()
                 </button>
             </div>}
 
-            { error && <div >
-                <div className="alert alert-warning ">
+            { error && 
+            <div className="alert alert-warning ">
                 <h4>⚠️ Error</h4>
-                <p></p>
                 <button className="btn btn-secondary" 
                     onClick={() => {
                         navigate(`/home`);
                 }}>
                     Go Back</button>
-                </div>
-
             </div>}
+            
         </div>
     )
 }

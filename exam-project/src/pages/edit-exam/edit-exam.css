@@ -263,35 +263,6 @@
   flex-wrap: wrap;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .edit-exam-page .subtitle {
-    font-size: 14px;
-  }
-
-  .edit-exam-page .details-card {
-    padding: 24px;
-    border-radius: 16px;
-  }
-
-  .edit-exam-page .question-card {
-    padding: 18px;
-  }
-
-  .edit-exam-page .form-actions {
-    flex-direction: column-reverse;
-  }
-
-  .edit-exam-page .btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .edit-exam-page .choice-item {
-    flex-wrap: wrap;
-  }
-}
-
 /* Smooth animations */
 @keyframes fadeIn {
   from {

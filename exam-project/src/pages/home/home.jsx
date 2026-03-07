@@ -25,14 +25,6 @@ async function getExams({ userId, filter = "", subjectId = "-1", page = 1, sourc
     return res.data;
 }
 
-// async function getSubjects() {
-//     const token = JSON.parse(localStorage.getItem("token") || "{}");
-//     const res = await axios.get(`/api/Subject`, {
-//         headers: { Authorization: `Bearer ${token.data}` },
-//     });
-//     return res.data;
-// }
-
 /* ================= COMPONENTS ================= */
 
 function ProfileButton() {
@@ -142,7 +134,7 @@ export function HomePage() {
     const [searchSubjectId, setSearchSubjectId] = useState("-1");
 
     const navigate = useNavigate();
-    // Fetch exams whenever page or search params change
+
     useEffect(() => {
         getExams({ userId, filter: searchFilter, subjectId: searchSubjectId, page: currentPage, source })
             .then((data) => {
@@ -150,10 +142,11 @@ export function HomePage() {
             });
     }, [userId, currentPage, searchFilter, searchSubjectId, source]);
 
+    
     function handleSearch(filter, subjectId) {
         setSearchFilter(filter);
         setSearchSubjectId(subjectId);
-        setCurrentPage(1); // Reset to first page on new search
+        setCurrentPage(1);
     }
 
     function handlePageChange(newPage) {

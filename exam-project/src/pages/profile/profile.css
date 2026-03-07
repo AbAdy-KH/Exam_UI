@@ -131,7 +131,7 @@
     font-size: 22px;
 }
 
-.profile-page .created {    background: blueviolet; }
+.profile-page .created { background: blueviolet; }
 
 .profile-page .saved {  background: orange; }
 
@@ -153,34 +153,4 @@
 .profile-page .actions-arrow {
     color: #64748b;
     font-size: 20px;
-}
-
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-    .profile-page {
-        padding: 0 16px 20px;
-    }
-
-    .profile-page .profile {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .profile-page .profile-avatar {
-        width: 80px;
-        height: 80px;
-        font-size: 32px;
-    }
-
-    .profile-page .profile-name {
-        font-size: 24px;
-    }
-
-    .profile-page .actions {
-        grid-template-columns: 1fr;
-    }
-
-    .profile-page .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
 }

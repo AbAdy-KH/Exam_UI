@@ -112,7 +112,7 @@ export function ExamResultsHistoryPage() {
 
     function handleSearch(query, subjectName) {
         let filteredResults = examResults;
-        console.log(filteredResults);
+        (filteredResults);
 
         if (query) {
                 filteredResults = filteredResults.filter((result) => {

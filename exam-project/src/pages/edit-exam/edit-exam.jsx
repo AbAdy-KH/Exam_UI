@@ -29,14 +29,19 @@ async function getExamDetails(examId) {
 async function getQuestions(examId) {
 
     try {
-        let response = await axios.get(`api/Question/${examId}?examId=${examId}`, {
+        let res = await axios.get(`api/Question/${examId}?examId=${examId}`, {
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token")).data}`
             }
         });
         
-        const data = response.data;
+        res.data.sort((a, b) => a.questionNumber - b.questionNumber);
+        res.data.forEach(q => {
+            q.options.sort((a, b) => a.optionNumber - b.optionNumber);
+        });
+
+        const data = res.data;
         return { ok: true, data };
 
     } catch (error) {
@@ -65,7 +70,6 @@ async function updateExam(examDto) {
         return { ok: false, status: 0, statusText: error.message };
     }  
 }
-
 
 // ===============Component=================
 function SubjectSelect({ subjects, selectedSubjectId, setSelectedSubject }) {    
@@ -158,11 +162,20 @@ function QuestionsContainer({ questions, handlers }) {
                  />
             ))}
 
-            <button className="btn-add-question" onClick={handlers.handleAddQuestion}>➕ Add Question</button>
+            <button className="btn btn-primary" onClick={handlers.handleAddQuestion}> Add Question </button>
         </div>
     );
 }
 
+function FormActions({ handlers })
+{
+    return (
+        <div className="form-actions">
+            <button className="btn btn-secondary" onClick={handlers.handelCancel}>Cancel</button>
+            <button className="btn btn-primary" onClick={handlers.handelSaveChanges}>Save Changes</button>
+        </div>
+    )
+}
 
 //================Page======================
 export function EditExamPage() {
@@ -203,47 +216,47 @@ export function EditExamPage() {
         setExamDetails(prev => ({ ...prev, subject: selectedSubject }));
     }
 
-    function handelCancel() {
-        window.history.back();
-    }
-    const handelSaveChanges = async () => {
-        let questionsDto = [];
-        questions.forEach((q, questionIndex) => {
-            let options = [];
-            q.options.forEach((o, optionIndex) => {
-                let option = {
-                    id : o.id,
-                    optionNumber : optionIndex + 1,
-                    text : o.text,
-                    isCorrect : o.isCorrect
+    const actionsHandlers = {
+        
+        handelCancel: () => {
+            window.history.back();
+        },
+
+        handelSaveChanges: async () => {
+            let questionsDto = [];
+            questions.forEach((q, questionIndex) => {
+                let options = [];
+                q.options.forEach((o, optionIndex) => {
+                    let option = {
+                        id : o.id,
+                        optionNumber : optionIndex + 1,
+                        text : o.text,
+                        isCorrect : o.isCorrect
+                    }
+
+                    options.push(option);
+                });
+
+                let question = {
+                    id : q.id,
+                    questionNumber : questionIndex + 1,
+                    text : q.text,
+                    options
                 }
 
-                options.push(option);
+                questionsDto.push(question);
             });
 
-            let question = {
-                id : q.id,
-                questionNumber : questionIndex + 1,
-                text : q.text,
-                options
-            }
-
-            questionsDto.push(question);
-        });
-
-        let data = {
-            id: examDetails.id,
-            title: examDetails.title,
-            subjectId: examDetails.subject.id,
-            notes: examDetails.notes,
-            questions: questionsDto
-        };
-
-        console.log("Data to be saved:", data);
-        
-        let res = await updateExam(data);
-
-        console.log("Update response:", res);
+            let data = {
+                id: examDetails.id,
+                title: examDetails.title,
+                subjectId: examDetails.subject.id,
+                notes: examDetails.notes,
+                questions: questionsDto
+            };
+            
+            await updateExam(data);
+        }
     }
 
     const handlers = {
@@ -354,10 +367,9 @@ export function EditExamPage() {
                         handlers={handlers}
                     />
 
-                    <div className="form-actions">
-                        <button className="btn btn-secondary" onClick={handelCancel}>Cancel</button>
-                        <button className="btn btn-primary" onClick={handelSaveChanges}>💾 Save Changes</button>
-                    </div>
+                    <FormActions 
+                        handlers={actionsHandlers} 
+                    />
                 </div>
             </div>
         </>

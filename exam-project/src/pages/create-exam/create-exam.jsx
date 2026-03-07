@@ -59,6 +59,102 @@ function SubjectSelect({ subjects, setSelectedSubject, selectedSubject }) {
     )
 }
 
+
+
+function ChoiceItem({ option, questionNumber, handlers }) {
+
+    return (
+        <div className="choice-item" key={option.optionNumber}>
+            <input 
+                type="text" 
+                name={`${option.optionNumber}-text`} 
+                placeholder={`Option ${option.optionNumber}`} 
+                value={option.text}
+                onChange={(e) => handlers.handleOptionTextChange(questionNumber, option.optionNumber, e.target.value)}
+                required
+            />
+            <label>
+                <input 
+                    type="radio" 
+                    name={`${questionNumber}`} 
+                    value={option.optionNumber}
+                    checked={option.isCorrect}
+                    onClick={() => handlers.handleSelectCorrectAnswer(questionNumber, option.optionNumber)}
+                />
+            </label>
+            <button 
+                className="btn btn-danger" 
+                onClick={() => handlers.handleRemoveOption(questionNumber, option.optionNumber)}
+            >
+                Remove
+            </button>
+        </div>
+    )
+}
+
+function QuestionCard({ q, handlers }) {
+
+    return (
+        <div className ="question-card" key={q.questionNumber}>
+            <div className="question-header">
+                <span className="question-number">Question {q.questionNumber}</span>
+                <button className="btn btn-danger" onClick={() => handlers.handleRemoveQuestion(q.questionNumber)}>
+                    Remove
+                </button>
+            </div>
+
+            <div className="question-input-group">
+                <label>Question Text <span className="required">*</span></label>
+                <textarea 
+                    name={`${q.questionNumber}-text`} 
+                    placeholder="Enter your question here..."
+                    value={q.text}
+                    onChange={(e) => handlers.handleQuestionTextChange(q.questionNumber, e.target.value)}
+                    required
+                ></textarea>
+            </div>
+
+            <div className="question-input-group">
+                <label>Choices <span className="required">*</span></label>
+                <div className="choices-container">
+                    {q.options.map((option) => (
+                        <ChoiceItem option={option} questionNumber={q.questionNumber} handlers={handlers.optionHandlers} />
+                    ))}
+                </div>
+
+                <button className="btn btn-secondary" onClick={() => handlers.handleAddOption(q.questionNumber)}>Add Option</button>
+                <div className="helper-text">Select the correct answer by clicking the radio button</div>
+            </div>
+        </div>
+    )
+}
+
+function QuestionSection({ questions, handlers }) {
+
+    return (
+        <div className="questions-section">
+            <h2>Questions</h2>
+
+            <div className="questions-container">
+                {questions.map((q) => (
+                    <QuestionCard q={q} handlers={handlers} />
+                ))}     
+            </div>
+
+            <div className="section-header">
+                <button 
+                    className="btn btn-secondary" 
+                    onClick={handlers.handleAddQuestion}
+                >
+                    Add Question
+                </button>
+            </div>
+            
+            <div className="helper-text">Add questions for this exam</div>
+        </div>
+    )
+}
+
 export function CreateExamPage() {
 
     const [examDetails, setExamDetails] = useState(null);
@@ -99,109 +195,6 @@ export function CreateExamPage() {
         }));
     }
 
-    function handleAddQuestion() {
-        setQuestions(prevQuestions => [
-            ...prevQuestions,
-            {
-                questionNumber: prevQuestions.length + 1,
-                text: "question text",
-                options: [
-                    {
-                        optionNumber: 1,
-                        text: "option text",
-                        isCorrect: true
-                    },
-                    {
-                        optionNumber: 2,
-                        text: "option text",
-                        isCorrect: false
-                    }
-                ]
-            }
-        ]);
-    }
-
-    function handleQuestionTextChange(questionNumber, newText) {
-        setQuestions(prevQuestions => 
-            prevQuestions.map(q =>
-                q.questionNumber === questionNumber ? { ...q, text: newText } : q
-            )
-        );
-    }
-
-    function handleRemoveQuestion(questionNumber) {
-        setQuestions(prevQuestions => 
-            prevQuestions.filter(q => q.questionNumber !== questionNumber)
-        );
-    }
-
-    function handleOptionTextChange(questionNumber, optionNumber, newText) {
-        setQuestions(prevQuestions => 
-            prevQuestions.map(q => {
-                if (q.questionNumber === questionNumber) {
-                    return {
-                        ...q,
-                        options: q.options.map(o => 
-                            o.optionNumber === optionNumber ? { ...o, text: newText } : o
-                        )
-                    };
-                }
-                return q;
-            })
-        );
-    }
-
-    function handleSelectCorrectAnswer(questionNumber, optionNumber) {
-        setQuestions(prevQuestions => 
-            prevQuestions.map(q => {
-                if (q.questionNumber === questionNumber) {
-                    return {
-                        ...q,
-                        options: q.options.map(o => ({
-                            ...o,
-                            isCorrect: o.optionNumber === optionNumber
-                        }))
-                    };
-                }
-                return q;
-            })
-        );
-    }
-
-    function handleRemoveOption(questionNumber, optionNumber) {
-        setQuestions(prevQuestions => 
-            prevQuestions.map(q => {
-                if (q.questionNumber === questionNumber) {
-                    return {
-                        ...q,
-                        options: q.options.filter(o => o.optionNumber !== optionNumber)
-                    };
-                }
-                return q;
-            })
-        );
-    }
-
-    function handleAddOption(questionNumber) {
-        setQuestions(prevQuestions =>
-            prevQuestions.map(q => {
-                if(q.questionNumber === questionNumber) {
-                    return {
-                        ...q,
-                        options: [
-                            ...q.options,
-                            {
-                                optionNumber: q.options.length + 1,
-                                text: "option text",
-                                isCorrect: false
-                            }
-                        ]
-                    };
-                }
-                return q;                
-            }));
-    }
-
     function handleCreateExam() {
         window.scrollTo(0, 0);
 
@@ -229,6 +222,109 @@ export function CreateExamPage() {
         });
 
         
+    }
+
+    let questionHandlers = {
+        
+        handleAddQuestion: () => {
+            setQuestions(prevQuestions => [
+                ...prevQuestions,
+                {
+                    questionNumber: prevQuestions.length + 1,
+                    text: "question text",
+                    options: [
+                        {
+                            optionNumber: 1,
+                            text: "option text",
+                            isCorrect: true
+                        },
+                        {
+                            optionNumber: 2,
+                            text: "option text",
+                            isCorrect: false
+                        }
+                    ]
+                }
+            ]);
+        },
+        handleQuestionTextChange: (questionNumber, newText) => {
+            setQuestions(prevQuestions => 
+                prevQuestions.map(q =>
+                    q.questionNumber === questionNumber ? { ...q, text: newText } : q
+                )
+            );
+        },    
+        handleRemoveQuestion: (questionNumber) => {
+            setQuestions(prevQuestions => 
+                prevQuestions.filter(q => q.questionNumber !== questionNumber)
+            );
+        },
+
+        optionHandlers: {
+            handleOptionTextChange: (questionNumber, optionNumber, newText) => {
+                setQuestions(prevQuestions => 
+                    prevQuestions.map(q => {
+                        if (q.questionNumber === questionNumber) {
+                            return {
+                                ...q,
+                                options: q.options.map(o => 
+                                    o.optionNumber === optionNumber ? { ...o, text: newText } : o
+                                )
+                            };
+                        }
+                        return q;
+                    })
+                );
+            },
+            handleSelectCorrectAnswer: (questionNumber, optionNumber) => {
+                setQuestions(prevQuestions => 
+                    prevQuestions.map(q => {
+                        if (q.questionNumber === questionNumber) {
+                            return {
+                                ...q,
+                                options: q.options.map(o => ({
+                                    ...o,
+                                    isCorrect: o.optionNumber === optionNumber
+                                }))
+                            };
+                        }
+                        return q;
+                    })
+                );
+            },    
+            handleRemoveOption: (questionNumber, optionNumber) => {
+                setQuestions(prevQuestions => 
+                    prevQuestions.map(q => {
+                        if (q.questionNumber === questionNumber) {
+                            return {
+                                ...q,
+                                options: q.options.filter(o => o.optionNumber !== optionNumber)
+                            };
+                        }
+                        return q;
+                    })
+                );
+            },    
+            handleAddOption: (questionNumber) => {
+                setQuestions(prevQuestions =>
+                    prevQuestions.map(q => {
+                        if(q.questionNumber === questionNumber) {
+                            return {
+                                ...q,
+                                options: [
+                                    ...q.options,
+                                    {
+                                        optionNumber: q.options.length + 1,
+                                        text: "option text",
+                                        isCorrect: false
+                                    }
+                                ]
+                            };
+                        }
+                        return q;                
+                    }));
+            }
+        }
     }
 
     return (
@@ -276,83 +372,8 @@ export function CreateExamPage() {
                         ></textarea>
                         <div className="helper-text">Optional: Add any relevant notes</div>
                     </div>
-
-                    <div className="questions-section">
-                        <h2>Questions</h2>
-
-                        <div className="questions-container">
-                            {questions.map((q) => (
-                                <div className ="question-card" key={q.questionNumber}>
-                                    <div className="question-header">
-                                        <span className="question-number">Question {q.questionNumber}</span>
-                                        <button className="btn btn-danger" onClick={() => handleRemoveQuestion(q.questionNumber)}>
-                                            Remove
-                                        </button>
-                                    </div>
-
-                                    <div className="question-input-group">
-                                        <label>Question Text <span className="required">*</span></label>
-                                        <textarea 
-                                            name={`${q.questionNumber}-text`} 
-                                            placeholder="Enter your question here..."
-                                            value={q.text}
-                                            onChange={(e) => handleQuestionTextChange(q.questionNumber, e.target.value)}
-                                            required
-                                        ></textarea>
-                                    </div>
-
-                                    <div className="question-input-group">
-                                        <label>Choices <span className="required">*</span></label>
-                                        <div className="choices-container">
-                                            {q.options.map((option) => (
-                                                <div className="choice-item" key={option.optionNumber}>
-                                                    <input 
-                                                        type="text" 
-                                                        name={`${option.optionNumber}-text`} 
-                                                        placeholder={`Option ${option.optionNumber}`} 
-                                                        value={option.text}
-                                                        onChange={(e) => handleOptionTextChange(q.questionNumber, option.optionNumber, e.target.value)}
-                                                        required
-                                                    />
-                                                    <label>
-                                                        <input 
-                                                            type="radio" 
-                                                            name={`${q.questionNumber}`} 
-                                                            value={option.optionNumber}
-                                                            checked={option.isCorrect}
-                                                            onClick={() => handleSelectCorrectAnswer(q.questionNumber, option.optionNumber)}
-                                                        />
-                                                    </label>
-                                                    <button 
-                                                        className="btn btn-danger" 
-                                                        onClick={() => handleRemoveOption(q.questionNumber, option.optionNumber)}
-                                                    >
-                                                        Remove
-                                                    </button>
-                                                </div>
-                                            ))}
-                                        </div>
-
-                                        <button className="btn btn-secondary" onClick={() => handleAddOption(q.questionNumber)}>Add Option</button>
-                                        <div className="helper-text">Select the correct answer by clicking the radio button</div>
-                                    </div>
-                                </div>
-                            ))}
-                                
-                        </div>
-
-                        <div className="section-header">
-                            <button 
-                                className="btn btn-secondary" 
-                                onClick={handleAddQuestion}
-                            >
-                                Add Question
-                            </button>
-                        </div>
-                        
-                        <div className="helper-text">Add questions for this exam</div>
-                        
-                    </div>
+                    
+                    <QuestionSection questions={questions} handlers={questionHandlers} />
 
                     <div className="form-actions">
                         <button className="btn btn-secondary"
