@@ -2,11 +2,8 @@
   "name": "exam-project",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://abady-kh.github.io/Exam_UI_React/",
   "type": "module",
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",

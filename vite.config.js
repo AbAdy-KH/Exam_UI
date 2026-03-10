@@ -12,5 +12,5 @@ export default defineConfig({
       }
     }
   },
-  base: "/Exam_UI_React/"
+  base: "/"
 })
