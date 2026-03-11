@@ -3,10 +3,12 @@ import axios from "axios";
 import "./exam-result-details.css";
 import { useEffect, useState } from "react";
 
+const API = import.meta.env.VITE_API_URL;
+
 async function getExamResult(examResultId) {
     try {
         let token = JSON.parse(localStorage.getItem("token"));
-        let url = `api/ExamResult/${examResultId}`;
+        let url = API + `/api/ExamResult/${examResultId}`;
 
         let res = await axios.get(url,
         {

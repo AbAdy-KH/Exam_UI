@@ -4,12 +4,14 @@ import { HeaderComponent } from "../../components/header";
 import getSubjects from "../../api/apiCalls.jsx";
 import "./edit-exam.css";
 
+const API = import.meta.env.VITE_API_URL;
+
 
 // ===============Api=================
 async function getExamDetails(examId) {
     try {
         let token = JSON.parse(localStorage.getItem("token"));
-        let url = `api/Exam/Details?examId=${examId}`;
+        let url = API + `/api/Exam/Details?examId=${examId}`;
         let res = await axios.get(url, {
             headers: { 
                 'Content-Type': 'application/json',
@@ -29,7 +31,7 @@ async function getExamDetails(examId) {
 async function getQuestions(examId) {
 
     try {
-        let res = await axios.get(`api/Question/${examId}?examId=${examId}`, {
+        let res = await axios.get(API + `/api/Question/${examId}?examId=${examId}`, {
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${JSON.parse(localStorage.getItem("token")).data}`
@@ -54,7 +56,7 @@ async function updateExam(examDto) {
     
     try {
         let token = JSON.parse(localStorage.getItem("token"));
-        let url = `api/Exam/update`;
+        let url = API + `/api/Exam/update`;
 
         await axios.put(url, examDto, {
             headers: { 

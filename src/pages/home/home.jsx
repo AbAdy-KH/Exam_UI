@@ -7,6 +7,8 @@ import { SubjectSelect } from "../../components/subjectSelect.jsx";
 import { useNavigate } from "react-router";
 import "./home.css";
 
+const API = import.meta.env.VITE_API_URL;
+
 /* ================= API ================= */
 
 async function getExams({ userId, filter = "", subjectId = "-1", page = 1, source = "all" }) {
@@ -14,7 +16,7 @@ async function getExams({ userId, filter = "", subjectId = "-1", page = 1, sourc
 
     const baseUrl = source === "saved" ? `/api/SavedExam` : `/api/Exam`;
 
-    const url = `${baseUrl}?userId=${encodeURIComponent(userId)}&pageNumber=${page}&filter=${filter}&subjectFilter=${subjectId}`;
+    const url = API + `${baseUrl}?userId=${encodeURIComponent(userId)}&pageNumber=${page}&filter=${filter}&subjectFilter=${subjectId}`;
 
     const res = await axios.get(url, {
         headers: {

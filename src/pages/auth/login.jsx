@@ -3,9 +3,11 @@ import axios from "axios";
 import { Link } from "react-router";
 import "./login.css";
 
+const API = import.meta.env.VITE_API_URL;
+
 async function login(username, password) {
     try {
-        const response = await axios.post("/api/Auth/login", {
+        const response = await axios.post(API + "/api/Auth/login", {
             username,
             password,
         });

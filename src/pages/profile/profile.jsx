@@ -5,6 +5,8 @@ import { HeaderComponent } from "../../components/header";
 import { get_current_user_id } from "../../utils/user";
 import "./profile.css";
 
+const API = import.meta.env.VITE_API_URL;
+
 /* ================= API ================= */
 
 async function getUser() {
@@ -14,7 +16,7 @@ async function getUser() {
     if (!userId) return null;
 
     try {
-        const res = await axios.get(`/api/User/${userId}`, {
+        const res = await axios.get(API + `/api/User/${userId}`, {
             headers: {
                 Authorization: `Bearer ${token.data}`,
             },

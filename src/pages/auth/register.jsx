@@ -1,13 +1,15 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router";
-import { Navigate } from "react-router";
+import { useNavigate } from "react-router";
 import "./register.css";
+
+const API = import.meta.env.VITE_API_URL;
 
 // ================= API ================= //
 async function register(registrationData, setError) {
     try {
-        await axios.post("/api/Auth/register", {
+        await axios.post(API + "/api/Auth/register", {
             fullname: registrationData.fullname,
             username: registrationData.username,
             email: registrationData.email,
@@ -129,7 +131,7 @@ export function RegisterPage() {
     });
     const [error, setError] = useState("");
 
-    const navigate = Navigate();
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;

@@ -5,6 +5,8 @@ import { SubjectSelect } from "../../components/subjectSelect";
 import { HeaderComponent } from "../../components/header";
 import "./exam-results-history.css";
 
+const API = import.meta.env.VITE_API_URL;
+
 // ================ API ================= //
 async function getExamResults() {
     try {
@@ -12,7 +14,7 @@ async function getExamResults() {
 
         const userId = params.get("userId");
         let token = JSON.parse(localStorage.getItem("token"));
-        const url = `api/ExamResult?userId=${ encodeURIComponent(userId) }`;
+        const url = API + `/api/ExamResult?userId=${ encodeURIComponent(userId) }`;
 
         const res = await axios.get(url, {
             headers: {

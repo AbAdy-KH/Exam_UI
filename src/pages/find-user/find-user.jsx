@@ -4,12 +4,14 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './find-user.css';
 
+const API = import.meta.env.VITE_API_URL;
+
 async function getUsers(username = "", pageNumber = 1)
 {
     try {
         let token = JSON.parse(localStorage.getItem("token"));
 
-        const url = `api/User/search?username=${username}&pageNumber=${pageNumber}`;
+        const url = API + `/api/User/search?username=${username}&pageNumber=${pageNumber}`;
 
         let res = await axios.get(url,
         {

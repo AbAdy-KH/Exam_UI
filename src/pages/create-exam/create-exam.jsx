@@ -4,11 +4,12 @@ import { HeaderComponent } from '../../components/header';
 import getSubjects from '../../api/apiCalls.jsx';
 import './create-exam.css';
 
+const API = import.meta.env.VITE_API_URL;
 
 async function CreateExam(examData) {
     try {
         let token = JSON.parse(localStorage.getItem("token"));
-        let url = 'api/Exam/CreateExam';
+        let url = API + '/api/Exam/CreateExam';
         
         const response = await axios.post(url, examData, {
             headers: {

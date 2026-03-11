@@ -4,13 +4,15 @@ import { useEffect, useState } from "react";
 import { get_current_user_id } from "../../utils/user";
 import "./exam-details.css"
 
+const API = import.meta.env.VITE_API_URL;
+
 //===============API==================
 async function getExamDetails() {
     try {
         let params = new URLSearchParams(window.location.search);
         let examId = params.get("id");
         let token = JSON.parse(localStorage.getItem("token"));
-        let url = `api/Exam/Details?examId=${examId}`;
+        let url = API + `/api/Exam/Details?examId=${examId}`;
         let res = await axios.get(url, {
             headers: { 
                 'Content-Type': 'application/json',
@@ -32,7 +34,7 @@ async function saveOrUnsaveExam({ examId, isSaved }) {
         let token = JSON.parse(localStorage.getItem("token")).data;
         if (!isSaved) {
             await axios.post(
-                `api/SavedExam/save`,
+                API + `/api/SavedExam/save`,
                 { examId },
                 {
                     headers: {
@@ -42,7 +44,7 @@ async function saveOrUnsaveExam({ examId, isSaved }) {
                 });
 
         } else {
-            await axios.delete(`api/SavedExam/delete1?examId=${encodeURIComponent(examId)}`, {
+            await axios.delete(API + `/api/SavedExam/delete1?examId=${encodeURIComponent(examId)}`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`

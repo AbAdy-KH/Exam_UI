@@ -3,12 +3,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./start-exam.css";
 
+const API = import.meta.env.VITE_API_URL;
+
 async function getFullExam(examId)
 {
     try {
 
         let token = JSON.parse(localStorage.getItem("token"));
-        let url = `api/Exam/full/${examId}?examId=${examId}`;
+        let url = API + `/api/Exam/full/${examId}?examId=${examId}`;
         
         const res = await axios.get(url,
             {
@@ -36,7 +38,7 @@ async function createExamResult(examData) {
     try {
         
         let token = JSON.parse(localStorage.getItem("token"));
-        let url = `api/ExamResult/create`;
+        let url = API + `/api/ExamResult/create`;
     
         await axios.post(url , examData, {
     
@@ -78,6 +80,8 @@ function ExamInfoCard({ examData }) {
 
 function OptionItem({ q, o, handleSelectOption }) {
 
+    console.log(o.id);
+
     return (
         <div key={o.id} className="form-check">
             <input className="form-check-input" type="radio" 
@@ -89,6 +93,9 @@ function OptionItem({ q, o, handleSelectOption }) {
 }
 
 function QuestionCard({ q, handleSelectOption }) {
+    
+    console.log("s");
+    
     return (
         <div key={q.id} className="card shadow question-card"> 
             <div className="card-header"><h5>Question {q.questionNumber}</h5></div>
@@ -109,7 +116,8 @@ function QuestionCard({ q, handleSelectOption }) {
 }
 
 function QuestionsContainer({ questions, handleSelectOption }) {
-
+    
+    console.log("c");
     return (
         <div className="questions-container">
             {questions.map(q => (
@@ -169,9 +177,15 @@ export function StartExamPage()
 
         examData.questions.forEach(q => {
             let selAns = selectedAnswers[q.questionNumber];
+            
+            console.log(selectedAnswers);
+            console.log(q);
+            console.log(q.options.find(o => o.id === selAns));
 
             if(q.options.find(o => o.id === selAns).isCorrect)
+            {
                 solved++;
+            }
         });
 
         const mark = Math.round((solved / examData.questions.length) * 100);
@@ -190,7 +204,7 @@ export function StartExamPage()
     }
 
 
-    if(!examData) return <div> Loading... </div>
+    if(!examData) return (<div> Loading... </div>)
 
 
     return (
