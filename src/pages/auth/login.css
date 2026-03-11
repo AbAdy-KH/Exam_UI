@@ -127,7 +127,7 @@
 /* ─── Responsive ─────────────────────────────── */
 @media (max-width: 480px) {
     .login-card {
-        max-width: 200px;
+        max-width: 270px;
         min-height: unset;      /* remove full-screen stretch */
         border-radius: 12px;    /* keep rounded corners */
         padding: 32px 20px;     /* slightly tighter padding */

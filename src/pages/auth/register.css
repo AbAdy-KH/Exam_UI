@@ -62,7 +62,7 @@
 }
 
 .register-field input {
-    width: 90%;
+    width: 100%;
     padding: 12px 16px;
     font-size: 15px;
     color: white;
@@ -140,7 +140,7 @@
 
 @media (max-width: 450px) {
     .register-card {
-        max-width: 200px;
+        max-width: 270px;
         min-height: unset;      /* remove full-screen stretch */
         border-radius: 12px;    /* keep rounded corners */
         padding: 32px 20px;     /* slightly tighter padding */

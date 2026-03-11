@@ -73,15 +73,15 @@ function ExamResultsTable({ examResults, navigate }) {
                 </thead>
                 <tbody>
                     {examResults.length > 0 ? examResults.map((result, index) => (
-                        <tr 
-                            className="exam-results-table-row" 
+                        <tr
+                            className="exam-results-table-row"
                             key={result.examResultId}
                             onClick={() => navigate(`/exam-result-details?id=${result.examResultId}`)}
                         >
-                            <td >{index + 1}</td>
-                            <td >{result.examTitle}</td>
-                            <td ><span className={`subject-tag`}>{result.subjectName}</span></td>
-                            <td ><span className={`mark-tag ${result.mark >= 50 ? 'pass' : 'fail'}`}>{result.mark}%</span></td>
+                            <td>{index + 1}</td>
+                            <td>{result.examTitle}</td>
+                            <td data-label="Subject"><span className="subject-tag">{result.subjectName}</span></td>
+                            <td data-label="Mark"><span className={`mark-tag ${result.mark >= 50 ? 'pass' : 'fail'}`}>{result.mark}%</span></td>
                         </tr>
                     )) : (
                         <tr>

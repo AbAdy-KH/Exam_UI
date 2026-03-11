@@ -1,5 +1,4 @@
 /* ===== Layout ===== */
-
 .exam-results-page {
     max-width: 900px;
     margin: 0px auto;
@@ -22,10 +21,11 @@
     border-radius: 8px;
     border: 1px solid #334155;
     width: 40vw;
+    box-sizing: border-box;
 }
 
 /* ===== Table ===== */
-.exam-results-page .exam-results-table{
+.exam-results-page .exam-results-table {
     background: #1e293b;
     border-radius: 12px;
     border-width: 3px;
@@ -44,6 +44,7 @@
 
 .exam-results-page .exam-results-table-row:hover {
     background: #273447;
+    cursor: pointer;
 }
 
 .exam-results-page th,
@@ -52,8 +53,7 @@
     border-bottom: 1px solid #334155;
 }
 
-
-.exam-results-page .mark-tag{
+.exam-results-page .mark-tag {
     padding: 5px 10px;
     border-radius: 6px;
     font-size: 13px;
@@ -66,6 +66,120 @@
 }
 
 .exam-results-page .mark-tag.fail {
-    background-color: orangeRed;
+    background-color: orangered;
     color: white;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 600px) {
+
+    .exam-results-page {
+        padding: 16px;
+    }
+
+    /* Toolbar — stack vertically */
+    .exam-results-page .toolbar {
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 24px;
+    }
+
+    .exam-results-page .toolbar-input {
+        width: 100%;
+        font-size: 16px;        /* prevents iOS auto-zoom */
+    }
+
+    .exam-results-page .toolbar .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* ── Table → Cards ── */
+
+    /* Hide header row */
+    .exam-results-page .exam-results-table thead {
+        display: none;
+    }
+
+    /* Make table and tbody block so rows stack */
+    .exam-results-page .exam-results-table,
+    .exam-results-page .exam-results-table tbody {
+        display: block;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+    }
+
+    /* Each row becomes a card */
+    .exam-results-page .exam-results-table-row {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background: #1e293b;
+        border-radius: 14px;
+        border: 1px solid #2d3f55;
+        padding: 18px 20px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.15s;
+    }
+
+    .exam-results-page .exam-results-table-row:hover {
+        background: #273447;
+        transform: translateY(-2px);
+    }
+
+    /* First cell (#) — hide the index number, it's useless on mobile */
+    .exam-results-page .exam-results-table-row td:first-child {
+        display: none;
+    }
+
+    /* Title cell — acts as card heading */
+    .exam-results-page .exam-results-table-row td:nth-child(2) {
+        font-size: 16px;
+        font-weight: 600;
+        color: white;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #334155;
+        border: none;
+        padding: 0 0 12px 0;
+        border-bottom: 1px solid #334155;
+    }
+
+    /* All cells */
+    .exam-results-page .exam-results-table-row td {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0;
+        border: none;
+        font-size: 14px;
+        color: #e2e8f0;
+        line-height: 1.4;
+    }
+
+    /* Labels via data-label */
+    .exam-results-page .exam-results-table-row td::before {
+        content: attr(data-label);
+        font-size: 10px;
+        font-weight: 700;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        min-width: 55px;
+    }
+
+    /* Hide label for title cell */
+    .exam-results-page .exam-results-table-row td:nth-child(2)::before {
+        display: none;
+    }
+
+    /* Tags */
+    .subject-tag,
+    .exam-results-page .mark-tag {
+        font-size: 12px;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: 20px;
+    }
 }
