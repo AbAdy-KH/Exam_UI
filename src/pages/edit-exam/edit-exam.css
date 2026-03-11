@@ -25,9 +25,11 @@
   letter-spacing: 0.5px;
 }
 
+
+
 /* Edit Mode Styles */
 .edit-exam-page .edit-input {
-  width: 93%;
+  width: 100%;                  /* ✅ fixed from 93% */
   padding: 14px 18px;
   background: rgba(15, 23, 42, 0.8);
   border: 2px solid rgba(59, 130, 246, 0.3);
@@ -46,7 +48,7 @@
 }
 
 .edit-exam-page .edit-textarea {
-  width: 93%;
+  width: 100%;
   min-height: 120px;
   padding: 14px 18px;
   background: rgba(15, 23, 42, 0.8);
@@ -82,6 +84,7 @@
   padding: 24px;
   margin-bottom: 20px;
   transition: all 0.3s;
+  animation: fadeIn 0.3s ease-out;
 }
 
 .edit-exam-page .question-card:hover {
@@ -141,7 +144,7 @@
 }
 
 .edit-exam-page .question-textarea {
-  width: 94%;
+  width: 100%;
   min-height: 90px;
   padding: 14px 18px;
   background: rgba(30, 41, 59, 0.6);
@@ -196,6 +199,7 @@
 .edit-exam-page .choice-item input[type="text"],
 .edit-exam-page .choice-input {
   flex: 1;
+  min-width: 0;               /* ✅ critical fix for flex children */
   padding: 10px 14px;
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(71, 85, 105, 0.4);
@@ -205,6 +209,7 @@
   font-family: inherit;
   outline: none;
   transition: all 0.2s;
+  box-sizing: border-box;
 }
 
 .edit-exam-page .choice-item input[type="text"]:focus,
@@ -247,6 +252,8 @@
   color: #60a5fa;
   border: 1px solid rgba(59, 130, 246, 0.3);
   font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
 .edit-exam-page .btn-add-choice:hover {
@@ -263,18 +270,116 @@
   flex-wrap: wrap;
 }
 
-/* Smooth animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+/* ===== Mobile ===== */
+@media (max-width: 450px) {
 
-.edit-exam-page .question-card {
-  animation: fadeIn 0.3s ease-out;
+  .edit-exam-page {
+    padding: 16px;
+  }
+
+  .edit-exam-page .exam-details-card {
+    padding: 20px 16px;
+    border-radius: 16px;
+  }
+
+  /* Inputs */
+  .edit-exam-page .edit-input,
+  .edit-exam-page .edit-textarea,
+  .edit-exam-page .question-textarea {
+    padding: 12px 14px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+
+  /* Detail groups */
+  .edit-exam-page .detail-group {
+    margin-bottom: 20px;
+  }
+
+  .edit-exam-page .detail-group label,
+  .edit-exam-page .question-input-group label {
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+
+  /* Question card */
+  .edit-exam-page .question-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .edit-exam-page .question-card:hover {
+    transform: none;            /* disable lift on touch screens */
+  }
+
+  .edit-exam-page .question-header {
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+  }
+
+  .edit-exam-page .question-number {
+    font-size: 13px;
+  }
+
+  .edit-exam-page .btn-remove-question {
+    padding: 7px 11px;
+    font-size: 12px;
+  }
+
+  /* Choices — stack radio + input + delete naturally */
+  .edit-exam-page .choice-item {
+    padding: 10px 12px;
+    gap: 10px;
+    border-radius: 8px;
+  }
+
+  .edit-exam-page .choice-item input[type="radio"] {
+    width: 18px;
+    height: 18px;
+  }
+
+  .edit-exam-page .choice-input {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .edit-exam-page .btn-remove-choice {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+
+  /* Add choice button */
+  .edit-exam-page .btn-add-choice {
+    width: 100%;
+    text-align: center;
+    padding: 11px;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+
+  /* Questions container — Add Question button */
+  .edit-exam-page .questions-container .btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+    margin-top: 4px;
+  }
+
+  /* Form actions — stack, Save on top */
+  .edit-exam-page .form-actions {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .edit-exam-page .form-actions .btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .edit-exam-page .form-actions .btn-primary {
+    order: -1;                  /* Save Changes goes to top */
+  }
 }

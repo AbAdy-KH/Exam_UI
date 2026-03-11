@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { HeaderComponent } from "../../components/header";
 import getSubjects from "../../api/apiCalls.jsx";
 import "./edit-exam.css";
@@ -53,7 +54,7 @@ async function getQuestions(examId) {
 }
 
 async function updateExam(examDto) {
-    
+
     try {
         let token = JSON.parse(localStorage.getItem("token"));
         let url = API + `/api/Exam/update`;
@@ -157,7 +158,8 @@ function QuestionsContainer({ questions, handlers }) {
         <div className="questions-container">
             <h2>Questions</h2>
             {questions.map((q, index) => (
-                <QuestionCard key={q.id} 
+                <QuestionCard 
+                    key={q.id} 
                     question={q} 
                     index={index} 
                     handlers = {handlers} 
@@ -188,6 +190,8 @@ export function EditExamPage() {
     const [examDetails, setExamDetails] = useState(null);
     const [questions, setQuestions] = useState([]);
     const [subjects, setSubjects] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         getExamDetails(examId).then(res => {
@@ -257,7 +261,9 @@ export function EditExamPage() {
                 questions: questionsDto
             };
             
-            await updateExam(data);
+            let res = await updateExam(data);
+            
+            if(res.ok) navigate(`/exam-details?id=${examDetails.id}`);
         }
     }
 
@@ -266,7 +272,7 @@ export function EditExamPage() {
             setQuestions(prev => [
                 ...prev,
                 {
-                    id: "", // This should be generated properly when saving to backend
+                    id: "",
                     text: "question text",
                     options: [
                         { id: "", text: "option 1", isCorrect: true },

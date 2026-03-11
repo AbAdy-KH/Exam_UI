@@ -155,7 +155,7 @@ export function RegisterPage() {
 
         let res = await register({ fullname, username, email, password }, setError);
 
-        if(res) navigate(`./login`);
+        if(res) navigate(`/`);
         else setError(res.message);
     };
 

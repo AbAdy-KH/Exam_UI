@@ -63,42 +63,43 @@ export function LoginPage() {
     };
 
     return (
-        <div className="login-card">
-            <LoginHeader />
 
-            {error && <p className="login-error">{error}</p>}
+            <div className="login-card">
+                <LoginHeader />
 
-            <div className="login-field">
-                <label>Username</label>
-                <div className="login-input-wrapper">
-                    <input
-                        type="text"
-                        placeholder="khaled"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
+                {error && <p className="login-error">{error}</p>}
+
+                <div className="login-field">
+                    <label>Username</label>
+                    <div className="login-input-wrapper">
+                        <input
+                            type="text"
+                            placeholder="khaled"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </div>
                 </div>
-            </div>
 
-            <div className="login-field">
-                <label>Password</label>
-                <div className="login-input-wrapper">
-                    <input
-                        type="password"
-                        placeholder="••••••••"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                <div className="login-field">
+                    <label>Password</label>
+                    <div className="login-input-wrapper">
+                        <input
+                            type="password"
+                            placeholder="••••••••"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </div>
                 </div>
+
+                <button className="login-button" onClick={handleLogin}>
+                    Login
+                </button>
+
+                <Link className="register-link" to="/register">
+                    <span className="register-text">Register</span>
+                </Link>
             </div>
-
-            <button className="login-button" onClick={handleLogin}>
-                Login
-            </button>
-
-            <Link className="register-link" to="/register">
-                <span className="register-text">Register</span>
-            </Link>
-        </div>
     );
 }

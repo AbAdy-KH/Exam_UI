@@ -4,7 +4,7 @@
   padding: 24px;
 }
 
-.exam-details-page .exam-details-card{
+.exam-details-page .exam-details-card {
   padding: 24px;
   background: #1e293b;
   border-radius: 20px;
@@ -21,6 +21,7 @@
   margin-left: auto;
   display: block;
   cursor: pointer;
+  margin-bottom: 24px;
 }
 
 .exam-details-page .saved {
@@ -94,51 +95,71 @@
   flex-wrap: wrap;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  h1 {
-    font-size: 26px;
+
+/* ===== Mobile ===== */
+@media (max-width: 450px) {
+
+  .exam-details-page {
+    padding: 16px;
   }
 
-  .exam-details-page .subtitle {
-    font-size: 14px;
-  }
-
-  .exam-details-page .details-card {
-    padding: 24px;
+  .exam-details-page .exam-details-card {
+    padding: 20px 16px;
     border-radius: 16px;
   }
 
-  .exam-details-page .question-card {
-    padding: 18px;
-  }
-
-  .exam-details-page .form-actions {
-    flex-direction: column-reverse;
-  }
-
-  .exam-details-page .btn {
+  /* Save button — full width on mobile, easier to tap */
+  .exam-details-page .save-exam-btn {
     width: 100%;
-    justify-content: center;
+    padding: 10px 0;
+    font-size: 15px;
+    border-radius: 8px;
+    margin-bottom: 24px;
   }
 
-  .exam-details-page .choice-item {
-    flex-wrap: wrap;
+  /* Detail groups — tighter spacing */
+  .exam-details-page .detail-group {
+    margin-bottom: 20px;
   }
-}
 
-/* Smooth animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+  .exam-details-page .detail-group label {
+    font-size: 11px;
+    margin-bottom: 8px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-.exam-details-page .question-card {
-  animation: fadeIn 0.exam-details-page .3s ease-out;
+  .exam-details-page .detail-value {
+    padding: 12px 14px;
+    font-size: 14px;
+    border-radius: 10px;
+  }
+
+  .exam-details-page .notes-box {
+    padding: 14px;
+    font-size: 14px;
+    min-height: 100px;
+    border-radius: 10px;
+    line-height: 1.6;
+  }
+
+  /* Actions — stack vertically, full width */
+  .exam-details-page .form-actions {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .exam-details-page .form-actions .btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+    border-radius: 10px;
+  }
+
+  /* Start Exam — highlight it as the primary action */
+  .exam-details-page .form-actions .btn-primary:last-child {
+    order: -1;                        /* move to top */
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    padding: 16px;
+    font-size: 16px;
+  }
 }

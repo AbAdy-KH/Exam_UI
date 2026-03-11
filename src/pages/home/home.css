@@ -62,3 +62,125 @@ td {
     border-bottom: 1px solid #334155;
 }
 
+@media (max-width: 450px) {
+
+    /* Layout */
+    .home-page {
+        padding: 16px;
+    }
+
+    /* Toolbar — stack vertically */
+    .home-page .toolbar {
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 24px;
+    }
+
+    .home-page .toolbar-input {
+        width: 100%;
+        padding: 13px 14px;
+        font-size: 15px;
+    }
+
+    .home-page .toolbar .btn {
+        width: 100%;
+        text-align: center;
+        padding: 13px;
+        font-size: 15px;
+    }
+
+    /* ── Table → Cards ── */
+    .home-page .exams-table thead {
+        display: none;
+    }
+
+    .home-page .exams-table,
+    .home-page .exams-table tbody {
+        display: block;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+    }
+
+    /* Card */
+    .home-page .exams-table-row {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background: #1e293b;
+        border-radius: 14px;
+        border: 1px solid #2d3f55;
+        padding: 18px 20px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.15s;
+    }
+
+    .home-page .exams-table-row:hover {
+        background: #273447;
+        transform: translateY(-2px);
+    }
+
+    /* First cell (Subject) — sits on top as a header area */
+    .home-page .exams-table-row td:first-child {
+        padding-bottom: 12px;
+        border-bottom: 1px solid #334155;
+    }
+
+    .home-page .exams-table-row td:first-child::before {
+        display: none;      /* no label for subject, the tag speaks for itself */
+    }
+
+    /* All cells */
+    .home-page .exams-table-row td {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0;
+        border: none;
+        font-size: 15px;
+        color: #e2e8f0;
+        line-height: 1.4;
+    }
+
+    /* Labels */
+    .home-page .exams-table-row td::before {
+        content: attr(data-label);
+        font-size: 10px;
+        font-weight: 700;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        min-width: 55px;
+    }
+
+    /* Subject tag */
+    .subject-tag {
+        font-size: 12px;
+        font-weight: 600;
+        padding: 5px 12px;
+        border-radius: 20px;        /* pill shape */
+        letter-spacing: 0.03em;
+    }
+
+    /* Pagination */
+    .pagination {
+        gap: 8px;
+        margin-top: 28px;
+    }
+
+    .pagination .btn {
+        padding: 12px 20px;
+        font-size: 14px;
+        flex: 1;                    /* Previous and Next share equal width */
+        text-align: center;
+    }
+
+    .pagination-page {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        color: #94a3b8;
+        white-space: nowrap;
+    }
+}

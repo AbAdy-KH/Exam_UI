@@ -123,7 +123,7 @@ function QuestionCard({ q, handlers }) {
                     ))}
                 </div>
 
-                <button className="btn btn-secondary" onClick={() => handlers.handleAddOption(q.questionNumber)}>Add Option</button>
+                <button className="btn btn-secondary" onClick={() => handlers.optionHandlers.handleAddOption(q.questionNumber)}>Add Option</button>
                 <div className="helper-text">Select the correct answer by clicking the radio button</div>
             </div>
         </div>
@@ -208,7 +208,7 @@ export function CreateExamPage() {
         const examData = {
             title: examDetails.title,
             subjectId: examDetails.subjectId,
-            notes: examDetails.notes,
+            notes: examDetails.notes || "",
             questions: questions
         };
 
@@ -327,6 +327,7 @@ export function CreateExamPage() {
             }
         }
     }
+
 
     return (
         <>

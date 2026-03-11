@@ -91,9 +91,9 @@ function ExamsTable({ exams, navigate }) {
                 <tbody>
                     {exams.map((exam) => (
                         <tr onClick={() => handleRowClick(exam.id)} key={exam.id} className="exams-table-row">
-                            <td><span className={`subject-tag`}>{exam.subject.name}</span></td>
-                            <td>{exam.title}</td>
-                            <td>{exam.username}</td>
+                            <td data-label="Subject"><span className="subject-tag">{exam.subject.name}</span></td>
+                            <td data-label="Title">{exam.title}</td>
+                            <td data-label="User">{exam.username}</td>
                         </tr>
                     ))}
                 </tbody>
