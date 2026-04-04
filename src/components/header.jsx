@@ -3,11 +3,16 @@ import "./header.css";
 export function HeaderComponent({rightSection}) {
     return (
         <header className="nav">
-            <a href="/home" className="nav-brand">
-                Bartihan
-            </a>
+            <div className="left-section"> 
+                <a href="/home" className="nav-brand">
+                    Bartihan
+                </a>
 
-            {rightSection}
+            </div>
+
+            <div className="right-section">
+                {rightSection}
+            </div>
         </header>
     );
 }

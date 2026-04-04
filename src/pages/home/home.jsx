@@ -33,10 +33,18 @@ function ProfileButton() {
     const userId = get_current_user_id();
 
     return (
-        <Link to={`/profile?id=${userId}`} className="nav-profile">
-            <span className="nav-profile-icon">👤</span>
-            {/* <span className="nav-profile-text">Profile</span> */}
-        </Link>
+        <>        
+            <Link to={'/chat'} className="nav-chats">
+                <span className="nav-icon">💬</span>
+            </Link>
+
+            
+
+            <Link to={`/profile?id=${userId}`} className="nav-profile">
+                <span className="nav-icon">👤</span>
+                {/* <span className="nav-profile-text">Profile</span> */}
+            </Link>
+        </>
     );
 }
 

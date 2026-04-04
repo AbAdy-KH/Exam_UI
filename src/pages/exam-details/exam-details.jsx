@@ -74,7 +74,7 @@ function FormActions ({ examDetails }) {
                     Back
             </button>
 
-            {   flag &&
+            {flag &&
                 <button 
                     onClick={() => 
                         window.location.href = `edit-exam?id=${examDetails?.id}`

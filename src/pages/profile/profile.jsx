@@ -9,9 +9,9 @@ const API = import.meta.env.VITE_API_URL;
 
 /* ================= API ================= */
 
-async function getUser() {
+async function getUser(userId) {
     const token = JSON.parse(localStorage.getItem("token") || "{}");
-    const userId = new URLSearchParams(window.location.search).get("id");
+
 
     if (!userId) return null;
 
@@ -19,13 +19,52 @@ async function getUser() {
         const res = await axios.get(API + `/api/User/${userId}`, {
             headers: {
                 Authorization: `Bearer ${token.data}`,
-            },
+            }
         });
+
+        console.log("User data:", res.data);
 
         return res.data;
     } catch (err) {
         console.error(err);
         return null;
+    }
+}
+
+async function followUnFollowUser(userId, isFollowing) {
+    const token = JSON.parse(localStorage.getItem("token") || "null");
+
+    if (!token || !token.data) {
+        return { ok: false, error: "User not authenticated" };
+    }
+
+    try {
+        let res;
+
+        if (isFollowing) {
+            res = await axios.delete(API + `/api/Friend/Unfollow/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${token.data}`,
+                }
+            });
+        } else {
+            res = await axios.post(API + `/api/Friend/Follow`,
+                { followedUserId: userId },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token.data}`,
+                    }
+                });
+        }
+
+        return { ok: true, data: res.data };
+
+    } catch (err) {
+        console.error(err);
+        return {
+            ok: false,
+            error: err.response?.data || err.message
+        };
     }
 }
 
@@ -35,12 +74,21 @@ function FindUserButton()
     return (
         <Link to="/find-user" className="nav-find-user">
             <span className="nav-find-user-icon">🔍</span>
-            {/* <span className="nav-find-user-text">Find User</span> */}
         </Link>
     )
 }
 
-function Profile({ user }) {
+function Profile({ user, setUser }) {
+
+    const currentUserId = get_current_user_id();
+
+    async function handleFollowUnfollow() {
+        const result = await followUnFollowUser(user.id, user.isFollowing);
+        if (result.ok) {
+            setUser({ ...user, isFollowing: !user.isFollowing });
+        }
+    }
+
     return (
         <div className="profile">
             <div className="profile-avatar">
@@ -57,15 +105,25 @@ function Profile({ user }) {
                 </div>
             </div>
 
-            <button
-                className="btn btn-danger"
-                onClick={() => {
-                    localStorage.removeItem("token");
-                    window.location.href = "/";
-                }}
-            >
-                Logout
-            </button>
+            {(currentUserId === user.id && (
+                <button
+                    className="btn btn-danger"
+                    onClick={() => {
+                        localStorage.removeItem("token");
+                        window.location.href = "/";
+                    }}
+                >
+                    Logout
+                </button>))
+            || (
+                <button 
+                    className="btn btn-secondary" 
+                    onClick={() => handleFollowUnfollow()}
+                >
+                    {user.isFollowing ? "Unfollow" : "Follow"}
+                </button>)    
+            }
+            
         </div>
     )
 }
@@ -157,11 +215,14 @@ function ActionsGrid({ user }) {
 /* ================= PAGE ================= */
 
 export function ProfilePage() {
+
+    const userId = new URLSearchParams(window.location.search).get("id");
+
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        getUser().then(setUser);
-    }, []);
+        getUser(userId).then(setUser);
+    }, [userId]);
 
     if (!user) {
         return <div className="page-content">Loading...</div>;
@@ -172,7 +233,7 @@ export function ProfilePage() {
             <HeaderComponent rightSection={FindUserButton()}/>
 
             <main className="profile-page">
-                <Profile user={user} />
+                <Profile user={user} setUser={setUser} />
 
                 <StatsGrid user={user} />
 
