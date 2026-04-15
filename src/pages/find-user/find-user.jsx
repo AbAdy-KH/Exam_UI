@@ -11,7 +11,18 @@ async function getUsers(username = "", pageNumber = 1)
     try {
         let token = JSON.parse(localStorage.getItem("token"));
 
-        const url = API + `/api/User/search?username=${username}&pageNumber=${pageNumber}`;
+        let params = new URLSearchParams(window.location.search);
+        let source = params.get("source") || "all";
+
+        let url = API;
+        if(source == "all") 
+        {
+            url += `/api/User/search?username=${username}&pageNumber=${pageNumber}`;
+        }
+        else if(source == "friends")
+        {
+            url += `/api/Friend/All`;
+        }
 
         let res = await axios.get(url,
         {

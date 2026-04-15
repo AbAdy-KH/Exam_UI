@@ -34,7 +34,7 @@ function ProfileButton() {
 
     return (
         <>        
-            <Link to={'/chat'} className="nav-chats">
+            <Link to={'/chats'} className="nav-chats">
                 <span className="nav-icon">💬</span>
             </Link>
 
@@ -42,7 +42,6 @@ function ProfileButton() {
 
             <Link to={`/profile?id=${userId}`} className="nav-profile">
                 <span className="nav-icon">👤</span>
-                {/* <span className="nav-profile-text">Profile</span> */}
             </Link>
         </>
     );

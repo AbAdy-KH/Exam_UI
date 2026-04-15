@@ -1,0 +1,179 @@
+/* ===== Layout ===== */
+.chat-page {
+    max-width: 900px;
+    margin: 0px auto;
+    padding: 24px;
+    font-family: inherit;
+}
+
+.nav .nav-friends {
+    color: #94a3b8;
+    font-size: 20px;
+    text-decoration: none;
+    background-color: #2563eb;
+    border-color: #1e293b;
+    padding: 10px;
+    border-radius: 400px;
+}
+
+/* ===== Toolbar ===== */
+.chat-page .toolbar {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.chat-page .toolbar-input {
+    font-family: inherit;
+    color: white;
+    background: #1e293b;
+    padding: 11px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    flex: 1;
+    min-width: 200px;
+}
+
+/* ===== Chat Table ===== */
+.chat-page .chats-table {
+    background: #1e293b;
+    border-radius: 12px;
+    border: 3px solid #1e293b;
+    overflow: hidden;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.chat-page .chats-table-header {
+    color: #909fbd;
+    background: #0f172a;
+    text-align: left;
+    font-size: 13px;
+}
+
+.chat-page .chats-table-row {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-left: 4px solid transparent;
+}
+
+.chat-page .chats-table-row:hover {
+    background: #273447;
+    border-left: 4px solid #2563eb;
+}
+
+.chat-page th, 
+.chat-page td {
+    padding: 16px 18px;
+    border-bottom: 1px solid #334155;
+    color: #e2e8f0;
+}
+
+/* ===== Chat Specific Elements ===== */
+.user-info-cell {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.avatar-wrapper {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.avatar-circle {
+    width: 42px;
+    height: 42px;
+    background: #2563eb;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.status-dot {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 10px;
+    height: 10px;
+    background: #22c55e;
+    border: 2px solid #1e293b;
+    border-radius: 50%;
+}
+
+.chat-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.user-name-text {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.last-msg-preview {
+    font-size: 13px;
+    color: #94a3b8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+}
+
+.time-cell {
+    text-align: right;
+    font-size: 12px;
+    color: #64748b;
+    white-space: nowrap;
+}
+
+/* ===== Responsive (Table to Cards) ===== */
+@media (max-width: 600px) {
+    .chat-page {
+        padding: 16px;
+    }
+
+    .chat-page .chats-table thead {
+        display: none;
+    }
+
+    .chat-page .chats-table, 
+    .chat-page .chats-table tbody {
+        display: block;
+        background: transparent;
+        border: none;
+    }
+
+    .chat-page .chats-table-row {
+        display: flex;
+        flex-direction: row; /* Keep avatar and text horizontal on mobile */
+        justify-content: space-between;
+        background: #1e293b;
+        border-radius: 14px;
+        border: 1px solid #2d3f55;
+        padding: 16px;
+        margin-bottom: 10px;
+        border-left: 4px solid transparent;
+    }
+
+    .chat-page .chats-table-row td {
+        display: block;
+        padding: 0;
+        border: none;
+    }
+
+    .chat-page .chats-table-row td[data-label="Last Message"] {
+        display: none; /* Hide full date column on mobile card to keep it clean */
+    }
+
+    .last-msg-preview {
+        max-width: 180px;
+    }
+}

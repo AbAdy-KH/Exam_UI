@@ -10,6 +10,7 @@ import { StartExamPage } from './pages/start-exam/start-exam.jsx';
 import { ShowExamResultPage } from './pages/mesc/show-exam-result.jsx';
 import { ExamResultDetailsPage } from './pages/exam-result-details/exam-result-details.jsx';
 import { FindUserPage } from './pages/find-user/find-user.jsx';
+import { ChatsPage } from './pages/chats/chats.jsx';
 import { ChatPage } from './pages/chat/chat.jsx';
 import { Routes, Route } from 'react-router';
 import './App.css';
@@ -29,6 +30,7 @@ function App() {
       <Route path='/show-exam-result' element={<ShowExamResultPage />} />
       <Route path='/exam-result-details' element={<ExamResultDetailsPage />} />
       <Route path='/find-user' element={<FindUserPage />} />
+      <Route path='/chats' element={<ChatsPage />} />
       <Route path='/chat' element={<ChatPage />} />
     </Routes>
   )
