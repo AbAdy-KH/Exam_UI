@@ -1,4 +1,4 @@
-# Exam API - Bartihan - ASP.NET
+# Exam UI - Bartihan - ASP.NET
 
 This repository contains the front-end source code for the **Bartihan** application.
 
